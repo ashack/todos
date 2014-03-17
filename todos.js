@@ -118,7 +118,9 @@ $(function(){
     change: function(){
       this.render();
       
+      
       if(this.model.get('done')){
+        $("#todo-list").find('label').removeClass('green-font');
         var elm = this.$el.find('.js-color').removeClass('red-font');
       elm.toggleClass('green-font', this.model.get('done'));
       }
@@ -184,7 +186,7 @@ $(function(){
       "keypress #new-todo":  "createOnEnter",
       "click #clear-completed": "clearCompleted",
       "click #toggle-all": "toggleAllComplete",
-      "click #todo-list": "showLatest"
+      "click .toggle": "showLatest"
     },
 
     // At initialization we bind to the relevant events on the `Todos`
@@ -257,9 +259,7 @@ $(function(){
       Todos.each(function (todo) { todo.save({'done': done}); });
     },
     showLatest: function(e){
-      //if(e.target.tagName = 'input'){
-        //elm.toggleClass('green-font', this.model.get('done'));
-      //}
+      $("#todo-list").find('label').removeClass('.green-font');
     }
 
   });

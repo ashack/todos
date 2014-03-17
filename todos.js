@@ -110,7 +110,7 @@ $(function(){
     render: function() {
       this.$el.html(this.template(this.model.toJSON()));
       this.$el.toggleClass('done', this.model.get('done'));
-      //this.$el.find('.js-color').toggleClass('green-font');
+      this.$el.find('.js-color').toggleClass('green-font');
       this.input = this.$('.edit');
       return this;
     },
@@ -127,7 +127,7 @@ $(function(){
     // Toggle the `"done"` state of the model.
     toggleDone: function() {
       var currentDate = new Date();
-      currentDate = currentDate.getDate()+ '-' +(currentDate.getMonth()+1) + '-' + currentDate.getFullYear();
+      currentDate = currentDate.getDate()+ '-' +(currentDate.getMonth()+1) + '-' + currentDate.getFullYear()+ " / "+currentDate.getUTCHours() + ":" + currentDate.getUTCMinutes();
       if(this.model.get("done") === false){
         this.model.set({completed: currentDate})
       } else {
@@ -183,7 +183,8 @@ $(function(){
     events: {
       "keypress #new-todo":  "createOnEnter",
       "click #clear-completed": "clearCompleted",
-      "click #toggle-all": "toggleAllComplete"
+      "click #toggle-all": "toggleAllComplete",
+      "click #todo-list": "showLatest"
     },
 
     // At initialization we bind to the relevant events on the `Todos`
@@ -240,7 +241,7 @@ $(function(){
       if (e.keyCode != 13) return;
       if (!this.input.val()) return;
       var currentDate = new Date();
-      currentDate = currentDate.getDate()+ '-' +(currentDate.getMonth()+1) + '-' + currentDate.getFullYear();
+      currentDate = currentDate.getDate()+ '-' +(currentDate.getMonth()+1) + '-' + currentDate.getFullYear()+ " / "+currentDate.getUTCHours() + ":" + currentDate.getUTCMinutes();
       Todos.create({title: this.input.val(), created: currentDate});
       this.input.val('');
     },
@@ -254,6 +255,11 @@ $(function(){
     toggleAllComplete: function () {
       var done = this.allCheckbox.checked;
       Todos.each(function (todo) { todo.save({'done': done}); });
+    },
+    showLatest: function(e){
+      //if(e.target.tagName = 'input'){
+        //elm.toggleClass('green-font', this.model.get('done'));
+      //}
     }
 
   });
